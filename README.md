@@ -73,6 +73,31 @@ uvicorn app.main:app --reload
 ```
 Visit Swagger: http://127.0.0.1:8000/docs
 
+## Usage (with screenshots)
+> Place screenshots in `docs/images/` with the filenames below. On Windows, use Win+Shift+S (Snipping Tool) and save as PNG.
+
+1) __Open Swagger UI__ (`/docs`)
+
+   ![Swagger home](docs/images/swagger-overview.png)
+
+2) __Authorize__ → paste your JWT (raw token, no Bearer prefix)
+
+   ![Authorize button](docs/images/swagger-authorize-button.png)
+
+   ![Paste token](docs/images/swagger-authorize-token.png)
+
+
+
+### Windows cURL tips
+* PowerShell line continuation uses backtick `, not backslash \
+* Replace `<TOKEN>` with the JWT string from `/login`.
+* Prefer one-line requests or use `Invoke-RestMethod`:
+
+```ps1
+$body = '{"name":"Ana","email":"ana@example.com","password":"secret123"}'
+Invoke-RestMethod -Uri "http://127.0.0.1:8000/signup" -Method POST -ContentType "application/json" -Body $body
+```
+
 ## Sample seed/input data
 Use the following sequence to create a user, obtain a token, create a class (future IST), and book it.
 
@@ -147,6 +172,3 @@ pytest -q
 * __401 Not authenticated__: Click "Authorize" in Swagger and paste your JWT (raw token; Swagger adds "Bearer ").
 * __400 Past class__: Ensure `dateTime` is in the future IST.
 * __Naive/aware datetime__: The app normalizes timestamps to IST before comparing.
-
-## Verify README formatting
-Use https://readme.so/ to quickly validate structure and headings before submission.
