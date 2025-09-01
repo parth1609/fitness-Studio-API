@@ -11,6 +11,7 @@ from sqlalchemy.orm import Session
 from app.dependencies import get_current_user, get_db
 from app.models import FitnessClass, User
 from app.schemas import ClassCreate, ClassOut
+from app.utils.time import normalize_to_ist
 
 router = APIRouter(prefix="/classes", tags=["classes"])
 
@@ -23,12 +24,12 @@ def create_class(
 ) -> ClassOut:
     """Create a new fitness class.
 
-    Authentication is required. Initial implementation stores fields as-is;
-    IST normalization and validation will be added in subsequent tasks.
+    Authentication is required. Stores the scheduled time in IST timezone.
     """
+    dt_ist = normalize_to_ist(class_in.date_time)
     item = FitnessClass(
         name=class_in.name,
-        date_time=class_in.date_time,
+        date_time=dt_ist,
         instructor=class_in.instructor,
         available_slots=class_in.available_slots,
     )
