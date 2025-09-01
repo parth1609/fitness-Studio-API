@@ -12,6 +12,7 @@ from datetime import datetime, timezone
 
 from fastapi import FastAPI
 from app.routers import auth, classes
+from app.db.session import Base, engine
 
 app = FastAPI(
     title="Fitness Studio Booking API",
@@ -40,4 +41,16 @@ def health() -> dict:
 # Routers
 app.include_router(auth.router)
 app.include_router(classes.router)
+
+
+@app.on_event("startup")
+def on_startup() -> None:
+    """Initialize application state on startup.
+
+    - Ensures all database tables are created based on SQLAlchemy models.
+    """
+    # Import models to ensure SQLAlchemy registers all tables before create_all
+    import app.models  # noqa: F401
+
+    Base.metadata.create_all(bind=engine)
 
