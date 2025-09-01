@@ -11,6 +11,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 
 from fastapi import FastAPI
+from app.routers import auth
 
 app = FastAPI(
     title="Fitness Studio Booking API",
@@ -36,8 +37,6 @@ def health() -> dict:
     return {"status": "ok", "time": datetime.now(tz=timezone.utc).isoformat()}
 
 
-# NOTE: Routers will be included here in subsequent tasks, for example:
-# from app.routers import auth, classes, bookings
-# app.include_router(auth.router)
-# app.include_router(classes.router)
-# app.include_router(bookings.router)
+# Routers
+app.include_router(auth.router)
+
