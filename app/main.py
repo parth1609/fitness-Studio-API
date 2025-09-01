@@ -11,7 +11,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 
 from fastapi import FastAPI
-from app.routers import auth
+from app.routers import auth, classes
 
 app = FastAPI(
     title="Fitness Studio Booking API",
@@ -39,4 +39,5 @@ def health() -> dict:
 
 # Routers
 app.include_router(auth.router)
+app.include_router(classes.router)
 

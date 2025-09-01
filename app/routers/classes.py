@@ -23,8 +23,8 @@ def create_class(
 ) -> ClassOut:
     """Create a new fitness class.
 
-    Authentication is required. Initial implementation stores fields as-is; IST
-    normalization and validation are added in subsequent tasks.
+    Authentication is required. Initial implementation stores fields as-is;
+    IST normalization and validation will be added in subsequent tasks.
     """
     item = FitnessClass(
         name=class_in.name,
