@@ -11,7 +11,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 
 from fastapi import FastAPI
-from app.routers import auth, classes
+from app.routers import auth, classes, bookings
 from app.db.session import Base, engine
 
 app = FastAPI(
@@ -41,6 +41,7 @@ def health() -> dict:
 # Routers
 app.include_router(auth.router)
 app.include_router(classes.router)
+app.include_router(bookings.router)
 
 
 @app.on_event("startup")
