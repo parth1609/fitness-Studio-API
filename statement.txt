@@ -1,0 +1,147 @@
+## 🧠 Objective
+
+Build a simple **Booking API** for a fictional **fitness studio** using **Python + FastAPI**.
+
+This assignment will assess your:
+
+- Backend development fundamentals
+- API design and structure
+- Coding best practices
+- Problem-solving and database handling
+
+## 🛠️ Tech Stack
+
+- **Language:** Python
+- **Framework:** FastAPI
+- **Database:** SQLite 
+- **ORM/Tools (Optional):** SQLAlchemy, Alembic, Tortoise ORM, or any other
+- **Authentication:** Session-based / JWT / Token-based - your choice
+
+## 📖 Scenario
+
+A fictional fitness studio offers multiple classes such as **Yoga**, **Zumba**, **HIIT**, etc.
+
+Users must first **sign up** and **log in**. Once authenticated, they can:
+
+- View all upcoming classes
+- Create new classes
+- Book available classes
+- View their own bookings
+
+## 🎯 Tasks
+
+### 🔐 User Authentication (NEW)
+
+Implement user authentication system:
+
+- **Sign Up**
+- **Log In**
+- Use JWT / token-based / session-based authentication
+
+> Only authenticated users should be able to:
+> 
+> - Create classes
+> - Book classes
+> - View their bookings
+
+
+
+### 📦 API Endpoints to Implement
+
+### 1. `POST /signup`
+
+- Register a new user
+- Body: `{ "name": "", "email": "", "password": "" }`
+
+### 2. `POST /login`
+
+- Authenticate user and return a token/session
+- Body: `{ "email": "", "password": "" }`
+
+3. POST /classes
+Create a new fitness class
+Requires authentication
+Request Body:
+{
+  "name": "Yoga Flow",
+  "dateTime": "2025-06-15T10:00:00Z",
+  "instructor": "John Doe",
+  "availableSlots": 20
+}
+
+
+4. GET /classes
+Fetch all upcoming fitness classes
+Returns:
+[
+  {
+    "id": 1,
+    "name": "HIIT Session",
+    "dateTime": "2025-06-18T08:00:00Z",
+    "instructor": "Jane Smith",
+    "availableSlots": 10
+  }
+]
+
+### 5. `POST /book`
+
+- **Book a slot in a class**
+- Requires authentication
+- **Request Body:**
+
+```json
+{
+  "class_id": 1,
+  "client_name": "Alice",
+  "client_email": "alice@example.com"
+}
+```
+
+- Validates:
+    - If slots are available
+    - Prevents overbooking
+    - Deducts slot on successful booking
+
+
+### 6. `GET /bookings`
+
+- **View all bookings by the authenticated user**
+- Returns a list of booked classes
+
+
+## 🧪 Technical Expectations
+
+- Use **FastAPI** for backend API development
+- Use **SQLite** for development
+- **Timezone Management:**
+    - All class times should be stored in **IST**
+    - Convert appropriately for different timezones
+- Write **modular, clean, and documented** code
+- Handle:
+    - Missing fields
+    - Overbooking
+    - Authentication failures
+
+## 🧪 Bonus (Optional but Appreciated)
+
+- Basic unit tests
+- Logging and request validation
+- Swagger docs (FastAPI auto-generates these)
+- Token expiration and refresh handling
+
+
+## 📦 Deliverables
+
+- Sample seed/input data
+- **README.md file** with:
+    - Project overview
+    - Setup instructions
+    - How to run locally
+    - API usage (via cURL or Postman samples)
+
+⚠️ **Important:**
+
+Before submission, please verify your `README.md` file structure using [https://readme.so/](https://readme.so/?utm_source=chatgpt.com).
+
+This ensures the file is **properly formatted and parsed** on GitHub.
+

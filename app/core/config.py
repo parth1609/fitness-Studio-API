@@ -16,7 +16,7 @@ Environment variables
 from __future__ import annotations
 
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 
 @dataclass
@@ -41,8 +41,11 @@ class Settings:
     ALGORITHM: str = os.getenv("ALGORITHM", "HS256")
     ACCESS_TOKEN_EXPIRE_MINUTES: int = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "60"))
     DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./db.sqlite3")
-    CORS_ORIGINS: list[str] = (
-        os.getenv("CORS_ORIGINS", "*").split(",") if os.getenv("CORS_ORIGINS") else ["*"]
+    # Use default_factory to avoid mutable default in dataclass
+    CORS_ORIGINS: list[str] = field(
+        default_factory=lambda: (
+            os.getenv("CORS_ORIGINS", "*").split(",") if os.getenv("CORS_ORIGINS") else ["*"]
+        )
     )
 
 

@@ -8,9 +8,14 @@ All documentation follows the project's Code Documentation Rulebook.
 """
 from __future__ import annotations
 
+import logging
 from datetime import datetime, timezone
 
 from fastapi import FastAPI
+
+# Reduce noisy passlib bcrypt version warning before routers import passlib
+logging.getLogger("passlib.handlers.bcrypt").setLevel(logging.ERROR)
+
 from app.routers import auth, classes, bookings
 from app.db.session import Base, engine
 

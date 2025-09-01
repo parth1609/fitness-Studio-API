@@ -72,9 +72,12 @@ class ClassOut(BaseModel):
 
     id: int
     name: str
-    date_time: datetime = Field(alias="dateTime")
+    # Use serialization_alias so validation reads ORM attribute "date_time"
+    # and output JSON uses "dateTime" as required by the spec.
+    date_time: datetime = Field(serialization_alias="dateTime")
     instructor: str
-    available_slots: int = Field(alias="availableSlots")
+    # Same reasoning for available_slots -> availableSlots
+    available_slots: int = Field(serialization_alias="availableSlots")
 
 
 # -----------------
