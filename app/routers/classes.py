@@ -11,7 +11,7 @@ from sqlalchemy.orm import Session
 from app.dependencies import get_current_user, get_db
 from app.models import FitnessClass, User
 from app.schemas import ClassCreate, ClassOut
-from app.utils.time import normalize_to_ist, is_past_in_ist
+from app.utils.time import normalize_to_ist, is_past_in_ist, now_ist
 
 router = APIRouter(prefix="/classes", tags=["classes"])
 
@@ -40,5 +40,18 @@ def create_class(
     db.commit()
     db.refresh(item)
     return item
+
+
+@router.get("", response_model=list[ClassOut])
+def list_upcoming_classes(db: Session = Depends(get_db)) -> list[ClassOut]:
+    """Return all upcoming classes (IST-aware) ordered by date_time ascending."""
+    now = now_ist()
+    items = (
+        db.query(FitnessClass)
+        .filter(FitnessClass.date_time >= now)
+        .order_by(FitnessClass.date_time.asc())
+        .all()
+    )
+    return items
 
 
